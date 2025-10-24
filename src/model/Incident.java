@@ -4,35 +4,37 @@ import java.time.LocalDate;
 
 /*
  * ANALISIS
- * Descripcion: Incidente reportado a un computador con descripcion y fecha.
+ * Descripcion: Incidente reportado a un computador con fecha, descripcion
+ * y estado de solucion .
  */
+public class Incident {
 
-/** Entidad Incidente. */
-public class Incidente {
+    private LocalDate dateReport;   // no null
+    private String description;     // no vacia
+    private boolean solution;       // false por defecto
+    private int solutionHours;      
 
-    private String descripcion;   // no vacia
-    private LocalDate fecha;      // no null
-
-    /**
-     * Crea un incidente.
-     * @param descripcion texto del incidente.
-     * @param fecha fecha del incidente.
-     * @pre  descripcion!=null && !descripcion.trim().isEmpty() && fecha!=null
-     * @post this.descripcion==descripcion && this.fecha==fecha
-     */
-    public Incidente(String descripcion, LocalDate fecha) {
-        this.descripcion = descripcion;
-        this.fecha = fecha;
+    public Incident(LocalDate dateReport, String description) {
+        this.dateReport = dateReport;
+        this.description = description;
+        this.solution = false;
+        this.solutionHours = 0;
     }
 
-    /** @return descripcion del incidente. */
-    public String getDescripcion() { return descripcion; }
+    public LocalDate getDateReport() { return dateReport; }
+    public String getDescription() { return description; }
+    public boolean isSolution() { return solution; }
+    public int getSolutionHours() { return solutionHours; }
 
-    /** @return fecha del incidente. */
-    public LocalDate getFecha() { return fecha; }
+    /** Marca solucion y registra horas y si no ha sido solucionado sera o puede ser 0. */
+    public void setSolution(boolean solution, int solutionHours) {
+        this.solution = solution;
+        this.solutionHours = Math.max(0, solutionHours);
+    }
 
     @Override
     public String toString() {
-        return fecha + ": " + descripcion;
+        String estado = solution ? ("SOLUCIONADO (" + solutionHours + "h)") : "PENDIENTE";
+        return dateReport + " - " + description + " - " + estado;
     }
 }

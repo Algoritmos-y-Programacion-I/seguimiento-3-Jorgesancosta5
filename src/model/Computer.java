@@ -4,58 +4,37 @@ import java.util.ArrayList;
 
 /*
  * ANALISIS
- * Descripcion: Computador con serial unico, ubicado en un piso/columna
- * y con una lista (ArrayList) de incidentes asociados (relacion 1..*).
+ * Descripcion: EL Computador tiene que tener un serial unico 
  */
+public class Computer {
 
-/** Entidad Computador. */
-public class Computador {
+    private String serialNumber;                // (String): Número de serie único para identificar al computador.
+    private boolean nextWindow;                 // indicamos si el computador tiene una ventana de soporte 
+    private ArrayList<Incident> incidents;      
 
-    private String serial;             // unico
-    private int piso;                  // 1..5
-    private int columna;               // 0..9 (primera disponible al registrar)
-    private ArrayList<Incidente> incidentes;
-
-    /**
-     * Crea un computador.
-     * @param serial serial unico.
-     * @param piso piso de ubicacion (1..5).
-     * @param columna columna en el piso (0..9).
-     * @pre  serial!=null && !serial.trim().isEmpty() && piso>=1 && piso<=5 && columna>=0 && columna<=9
-     * @post atributos asignados y lista de incidentes vacia
-     */
-    public Computador(String serial, int piso, int columna) {
-        this.serial = serial;
-        this.piso = piso;
-        this.columna = columna;
-        this.incidentes = new ArrayList<Incidente>();
+    public Computer(String serialNumber, boolean nextWindow) {
+        this.serialNumber = serialNumber;
+        this.nextWindow = nextWindow;
+        this.incidents = new ArrayList<>();
     }
 
-    /** @return serial. */
-    public String getSerial() { return serial; }
+    public String getSerialNumber() { return serialNumber; }
+    public boolean isNextWindow() { return nextWindow; }
+    public void setNextWindow(boolean nextWindow) { this.nextWindow = nextWindow; }
 
-    /** @return piso (1..5). */
-    public int getPiso() { return piso; }
+    public int getIncidentsCount() { return incidents.size(); }
+    public Incident getIncident(int index) { return incidents.get(index); }
+    public ArrayList<Incident> getIncidents() { return incidents; }
 
-    /** @return columna (0..9). */
-    public int getColumna() { return columna; }
-
-    /** @return cantidad de incidentes. */
-    public int getCantidadIncidentes() { return incidentes.size(); }
-
-    /** @return lista interna (solo lectura por referencia). */
-    public ArrayList<Incidente> getIncidentes() { return incidentes; }
-
-    /**
-     * Agrega un incidente a este computador.
-     * @param inc incidente no nulo.
-     * @pre  inc!=null
-     * @post incidentes.size() aumenta en 1 y el ultimo es inc
-     */
-    public void agregarIncidente(Incidente inc) { incidentes.add(inc); }
+    /** Agregamos un incidente. */
+    public void addIncident(Incident inc) { incidents.add(inc); }
 
     @Override
     public String toString() {
-        return "PC[" + serial + "] Piso " + piso + " Col " + columna + " (incidentes=" + incidentes.size() + ")";
+        return "Computer{" +
+                "serial='" + serialNumber + '\'' +
+                " nextWindow=" + nextWindow +
+                " incidents=" + incidents.size() +
+                '}';
     }
 }
